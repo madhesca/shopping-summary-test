@@ -10,33 +10,29 @@ import PromoCode from "./components/PromoCode";
 
 export class App extends Component {
   state = {
-    price: 100,
-    savings: -4.5,
-    taxes: 0,
-    total: 0,
     discount: "DISCOUNT",
-    applied: false,
+    applied: false
   };
 
-  clickHandler = (discount) => {
+  clickHandler = discount => {
     this.setState(
       () => {
         return {
           applied: true,
-          discount: "",
+          discount: ""
         };
       },
       () => {
         this.setState(() => {
           return {
-            total: this.state.total * 0.9,
+            total: this.state.total * 0.9
           };
         });
       }
     );
   };
 
-  changeHandler = (e) => {
+  changeHandler = e => {
     this.setState({ discount: e.target.value });
   };
 
@@ -44,13 +40,13 @@ export class App extends Component {
     this.setState(
       () => {
         return {
-          taxes: (this.state.price + this.state.savings) * 0.12,
+          taxes: (this.state.price + this.state.savings) * 0.12
         };
       },
       function () {
         this.setState(() => {
           return {
-            total: this.state.price + this.state.savings + this.state.taxes,
+            total: this.state.price + this.state.savings + this.state.taxes
           };
         });
       }
@@ -58,7 +54,7 @@ export class App extends Component {
   }
 
   render() {
-    const { total, discount, applied } = this.state;
+    const { discount, applied } = this.state;
     return (
       <div className="container">
         <Container className="purchase-card">
@@ -66,16 +62,11 @@ export class App extends Component {
           <Pickup />
           <EstimatedTaxes />
           <hr />
-          <Total total={total.toFixed(2)} />
+          <Total />
           <br />
-          <ItemDetails total={total} />
+          <ItemDetails />
           <hr />
-          <PromoCode
-            applied={applied}
-            discount={discount}
-            changeHandler={this.changeHandler}
-            clickHandler={this.clickHandler}
-          />
+          <PromoCode applied={applied} changeHandler={this.changeHandler} clickHandler={this.clickHandler} />
         </Container>
       </div>
     );

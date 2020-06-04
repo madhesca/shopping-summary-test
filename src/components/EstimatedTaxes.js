@@ -6,7 +6,7 @@ import { taxes } from "./../redux/Subtotal/subtotalActions";
 function EstimatedTaxes({ taxes, computeTaxes }) {
   useEffect(() => {
     computeTaxes();
-  }, []);
+  });
 
   return (
     <Row>
@@ -17,11 +17,11 @@ function EstimatedTaxes({ taxes, computeTaxes }) {
 }
 
 const mapStateToProps = ({ subtotal: { taxes } }) => ({
-  taxes,
+  taxes
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  computeTaxes: () => dispatch(taxes()),
+const mapDispatchToProps = dispatch => ({
+  computeTaxes: () => dispatch(taxes())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EstimatedTaxes);

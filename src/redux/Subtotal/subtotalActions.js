@@ -1,4 +1,8 @@
-import { TAXES } from "./subtotalTypes";
+import { TAXES, TOTAL } from "./subtotalTypes";
 export const taxes = () => ({
-  type: TAXES,
+  type: TAXES
+});
+
+export const total = () => ({
+  type: TOTAL
 });

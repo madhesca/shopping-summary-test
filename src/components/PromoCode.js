@@ -1,38 +1,29 @@
 import React, { useState } from "react";
 import { Col, Row, Collapse, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import { clickHandler, changeHandler } from "../redux/PromoCode/promoCodeActions";
 
-function PromoCode({ clickHandler, changeHandler, discount, applied }) {
+function PromoCode({ changed, discount, apply, applied, total }) {
   const [toggle, setToggle] = useState(false);
 
   return (
     <div>
       <Row>
         <Col md={6}>
-          <Button onClick={() => setToggle(!toggle)}>
-            {!toggle ? "+ Show" : "- Hide"} Code
-          </Button>
+          <h3>{total * 0.9}</h3>
+          <Button onClick={() => setToggle(!toggle)}>{!toggle ? "+ Show" : "- Hide"} Code</Button>
         </Col>
       </Row>
       <br />
       <Collapse in={toggle}>
         <Row>
           <Col md={12}>
-            <label>{applied ? "Thank you" : "Input promo code"}</label>
+            <label>{apply ? "Thank you" : "Input promo code"}</label>
             <br />
-            <input
-              type="text"
-              value={discount}
-              onChange={(e) => changeHandler(e)}
-            />
+            <input type="text" value={discount} onChange={e => changed(e.target.value)} />
 
-            <button
-              onClick={
-                discount === "DISCOUNT" ? () => clickHandler(discount) : null
-              }
-              disabled={applied}
-              className="btn btn-primary"
-            >
-              {applied ? "Applied" : "Apply"}
+            <button onClick={() => applied(total)} disabled={apply} className="btn btn-primary">
+              {apply ? "Applied" : "Apply"}
             </button>
           </Col>
         </Row>
@@ -41,4 +32,15 @@ function PromoCode({ clickHandler, changeHandler, discount, applied }) {
   );
 }
 
-export default PromoCode;
+const mapStateToProps = state => ({
+  apply: state.promoCode.apply,
+  discount: state.promoCode.discount,
+  total: state.subtotal.total
+});
+
+const mapDispatchToProps = dispatch => ({
+  applied: total => dispatch(clickHandler(total)),
+  changed: input => dispatch(changeHandler(input))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PromoCode);
