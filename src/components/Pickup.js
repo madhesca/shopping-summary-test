@@ -1,14 +1,15 @@
 import React from "react";
 import { Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
+import { connect } from "react-redux";
 
 var styles = {
   pickupSavings: {
-    textDecoration: "underline"
+    textDecoration: "underline",
   },
   totalSavings: {
     color: "red",
-    fontWeight: 800
-  }
+    fontWeight: 800,
+  },
 };
 
 function Pickup({ price }) {
@@ -24,9 +25,13 @@ function Pickup({ price }) {
           <div style={styles.pickupSavings}>Pickup Savings</div>
         </OverlayTrigger>
       </Col>
-      <Col md={6}>{`P${price.toFixed(2)}`}</Col>
+      <Col md={6}>{`P   ${price.toFixed(2)}`}</Col>
     </Row>
   );
 }
 
-export default Pickup;
+const mapStateToProps = ({ subtotal: { savings } }) => ({
+  price: savings,
+});
+
+export default connect(mapStateToProps)(Pickup);
