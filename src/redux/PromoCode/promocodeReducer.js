@@ -1,8 +1,9 @@
-import { APPLY, INPUT } from "./promoCodeTypes";
+import { APPLY, INPUT, PROMO, CLEAR } from "./promoCodeTypes";
 
 const initialState = {
   apply: false,
-  discount: "test"
+  discount: "test",
+  promo: 0,
 };
 
 const promoCodeReducer = (state = initialState, action) => {
@@ -10,14 +11,27 @@ const promoCodeReducer = (state = initialState, action) => {
     case APPLY:
       return {
         ...state,
-        apply: true
+        apply: true,
       };
 
     case INPUT:
       return {
         ...state,
-        discount: action.payload
+        discount: action.payload,
       };
+
+    case PROMO:
+      return {
+        ...state,
+        promo: action.payload,
+      };
+
+    case CLEAR:
+      return {
+        ...state,
+        discount: "",
+      };
+
     default:
       return state;
   }

@@ -1,7 +1,7 @@
-import { APPLY, INPUT } from "./promoCodeTypes";
+import { APPLY, INPUT, PROMO, CLEAR } from "./promoCodeTypes";
 
 export const apply = () => ({
-  type: APPLY
+  type: APPLY,
 });
 
 // export const promo = here => {
@@ -9,14 +9,34 @@ export const apply = () => ({
 //   return total;
 // };
 
-export const clickHandler = total => {
-  return dispatch => {
+// export const clickHandler = (total) => {
+//   const grandTotal = total * 0.09;
+//   console.log(grandTotal);
+//   return (dispatch) => {
+//     dispatch(apply());
+//   };
+// };
+
+export const clear = () => ({
+  type: CLEAR,
+});
+
+export const promoTotal = (amount) => ({
+  type: PROMO,
+  payload: amount,
+});
+
+export const clickHandler = (total) => {
+  const grandTotal = total * 0.9;
+
+  return (dispatch) => {
     dispatch(apply());
-    dispatch(promo(total));
+    dispatch(promoTotal(grandTotal));
+    dispatch(clear());
   };
 };
 
-export const changeHandler = input => ({
+export const changeHandler = (input) => ({
   type: INPUT,
-  payload: input
+  payload: input,
 });

@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import { connect } from "react-redux";
 import { total } from "../redux/Subtotal/subtotalActions";
 
-function Total({ total, totalAmount }) {
+function Total({ total, totalAmount, promoTotal, apply }) {
   useEffect(() => {
     totalAmount();
   });
@@ -15,19 +15,25 @@ function Total({ total, totalAmount }) {
           <strong>TOTAL</strong>
         </Col>
         <Col md={6}>
-          <strong>{total.toFixed(2)}</strong>
+          {apply ? (
+            <strong> {promoTotal.toFixed(2)}</strong>
+          ) : (
+            <strong>{total.toFixed(2)}</strong>
+          )}
         </Col>
       </Row>
     </div>
   );
 }
 
-const mapStateToProps = ({ subtotal: { total } }) => ({
-  total
+const mapStateToProps = (state) => ({
+  total: state.subtotal.total,
+  promoTotal: state.promoCode.promo,
+  apply: state.promoCode.apply,
 });
 
-const mapDispatchToProps = dispatch => ({
-  totalAmount: () => dispatch(total())
+const mapDispatchToProps = (dispatch) => ({
+  totalAmount: () => dispatch(total()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Total);

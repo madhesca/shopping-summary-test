@@ -4,7 +4,7 @@ const initialState = {
   price: 100,
   savings: -5.5,
   taxes: 0,
-  total: 0
+  total: 0,
 };
 
 const subtotalReducer = (state = initialState, action) => {
@@ -12,13 +12,13 @@ const subtotalReducer = (state = initialState, action) => {
     case TAXES:
       return {
         ...state,
-        taxes: (state.price + state.savings) * 0.12
+        taxes: (state.price + state.savings) * 0.12,
       };
 
     case TOTAL:
       return {
         ...state,
-        total: state.price + state.savings + state.taxes
+        total: state.price + state.savings + state.taxes,
       };
 
     default:
